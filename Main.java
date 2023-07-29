@@ -1,27 +1,65 @@
-package hello2;
+package hello3;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.util.Scanner;
 
 public class Main {
 
 	public static void main(String[] args) {
 		System.out.println("hello world");
-//		Scanner in=new Scanner(System.in);
-		//下面的是代替上面这一行的读入功能的
-		//做一个字节的数组
-		byte[] buffer=new byte[1024];//1k字节大的buffer
-		try {
-			int len=System.in.read(buffer);//len是告诉我们读了多少东西
-			String s=new String(buffer,0,len);//用这个buffer里面从0开始的这么多字节来构造一个String
-			System.out.println("读到了"+len+"字节");//字节的个数，汉字一个字符是两个字节，回车也是一个字符一个字节
-			System.out.println(s);//输出s是多少，即输出那个字符串
-			System.out.println("s的长度是："+s.length());//字符的个数
+		//构造一个字节数组，它有10个字节
+		byte[] buf=new byte[10];
+		//遍历数组
+		for(int i=0;i<buf.length;i++) {
+			buf[i]=(byte)i;//int需要强制转换成字节
 			
+			
+		}
+		try {
+			//不仅仅可以写字节用DataOutputStream
+			PrintWriter out=new PrintWriter(
+					new BufferedWriter(
+							new OutputStreamWriter(
+									new FileOutputStream("a.txt"))));
+//			FileOutputStream out=new FileOutputStream("a.dat");//建立一个FileOutputStream的对象
+			//用FileOutputStream只能写字节
+//			out.write(buf);
+			int i=12;
+			out.println(i);
+			out.close();
+			BufferedReader in=new BufferedReader(
+					new InputStreamReader(
+							new FileInputStream("src/hello3/Main.java")));
+			String line;
+			while((line=in.readLine())!=null) {
+				System.out.println(line);
+			}
+//			DataInputStream in=new DataInputStream(
+//					new BufferedInputStream(
+//							new FileInputStream("a.dat")));
+//			int j=in.readInt();
+//			System.out.println(j);
+			
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		//文件名叫a.dat
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}//read的到buffer里面去
+		}
 		
 		
 
